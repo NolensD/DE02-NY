@@ -1,0 +1,122 @@
+pig_branch_details = LOAD '/user/maria_dev/Credit_Card_System/Branch/part-m-00000' USING PigStorage(',') as (branch_name:chararray, branch_street:chararray, branch_city:chararray, branch_state:chararray, branch_zip:int, branch_phone:chararray, last_updated:chararray, branch_code:int);
+dump pig_branch_details;
+
+filter_data =  FILTER pig_branch_details  BY branch_name == 'Nolens Bank';
+
+dump filter_data;
+
+BranchNameAndPhone = FOREACH pig_branch_details GENERATE branch_name,$5;
+
+dump BranchNameAndPhone;
+
+--------------------------------------------------------------------------------------------------------------------
+
+OUTPUT
+--------
+(Nolens Bank,Bridle Court,Lakeville,MN,55044,(276)456-5276,2018-05-24 12:26:52.0,1)
+(Example Bank,Washington Street,Huntley,IL,60142,(993)461-8993,2018-05-16 09:09:51.0,2)
+(Example Bank,Warren Street,SouthRichmondHill,NY,11419,(926)498-5926,2018-05-16 09:09:51.0,3)
+(Example Bank,Cleveland Street,Middleburg,FL,32068,(064)466-3064,2018-05-16 09:09:51.0,4)
+(Example Bank,14th Street,KingOfPrussia,PA,19406,(701)484-9701,2018-05-16 09:09:51.0,5)
+(Example Bank,Jefferson Street,Paterson,NJ,7501,(890)414-4890,2018-05-16 09:09:51.0,7)
+(Example Bank,B Street,Pittsford,NY,14534,(272)467-8272,2018-05-16 09:09:51.0,8)
+(Example Bank,Jefferson Court,Wethersfield,CT,6109,(219)467-5219,2018-05-16 09:09:51.0,9)
+(Example Bank,Cambridge Road,NorthOlmsted,OH,44070,(047)414-5047,2018-05-16 09:09:51.0,10)
+(Example Bank,3rd Street West,Hillsborough,NJ,8844,(354)436-6354,2018-05-16 09:09:51.0,11)
+(Example Bank,Mill Road,MadisonHeights,MI,48071,(175)486-7175,2018-05-16 09:09:51.0,12)
+...
+...
+...
+
+----------------------------------------------------------------------------------------------------------------
+Success! 
+  
+ Job Stats (time in seconds): 
+ JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs 
+ job_1528831579547_0059	1	0	2	2	2	2	0	0	0	0	pig_branch_details	MAP_ONLY	hdfs://sandbox.hortonworks.com:8020/tmp/temp1959868791/tmp-364021688, 
+  
+ Input(s): 
+ Successfully read 115 records (10205 bytes) from: "/user/maria_dev/Credit_Card_System/Branch/part-m-00000" 
+  
+ Output(s): 
+ Successfully stored 115 records (11290 bytes) in: "hdfs://sandbox.hortonworks.com:8020/tmp/temp1959868791/tmp-364021688" 
+  
+ Counters: 
+ Total records written : 115 
+ Total bytes written : 11290 
+ Spillable Memory Manager spill count : 0 
+ Total bags proactively spilled: 0 
+ Total records proactively spilled: 0 
+  
+ Job DAG: 
+ job_1528831579547_0059 
+
+
+OUTPUT
+--------
+(Nolens Bank,Bridle Court,Lakeville,MN,55044,(276)456-5276,2018-05-24 12:26:52.0,1)
+
+-------------------------------------------------------------------------------------------------------------
+Success! 
+  
+ Job Stats (time in seconds): 
+ JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs 
+ job_1528831579547_0060	1	0	2	2	2	2	0	0	0	0	filter_data,pig_branch_details	MAP_ONLY	hdfs://sandbox.hortonworks.com:8020/tmp/temp1959868791/tmp-542116929, 
+  
+ Input(s): 
+ Successfully read 115 records (10205 bytes) from: "/user/maria_dev/Credit_Card_System/Branch/part-m-00000" 
+  
+ Output(s): 
+ Successfully stored 1 records (96 bytes) in: "hdfs://sandbox.hortonworks.com:8020/tmp/temp1959868791/tmp-542116929" 
+  
+ Counters: 
+ Total records written : 1 
+ Total bytes written : 96 
+ Spillable Memory Manager spill count : 0 
+ Total bags proactively spilled: 0 
+ Total records proactively spilled: 0 
+  
+ Job DAG: 
+ job_1528831579547_0060 
+
+
+--------------------------------------------------------------------------------------------------------------
+
+OUTPUT
+----------
+(Example Bank,(993)461-8993)
+(Example Bank,(926)498-5926)
+(Example Bank,(064)466-3064)
+(Example Bank,(701)484-9701)
+(Example Bank,(890)414-4890)
+(Example Bank,(272)467-8272)
+(Example Bank,(219)467-5219)
+(Example Bank,(047)414-5047)
+(Example Bank,(354)436-6354)
+(Example Bank,(175)486-7175)
+...
+...
+...
+
+--------------------------------------------------------------------------------------------------------------
+Success! 
+  
+ Job Stats (time in seconds): 
+ JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs 
+ job_1528831579547_0072	1	0	3	3	3	3	0	0	0	0	BranchNameAndPhone,pig_branch_details	MAP_ONLY	hdfs://sandbox.hortonworks.com:8020/tmp/temp-1008822037/tmp-363946164, 
+  
+ Input(s): 
+ Successfully read 115 records (10205 bytes) from: "/user/maria_dev/Credit_Card_System/Branch/part-m-00000" 
+  
+ Output(s): 
+ Successfully stored 115 records (4024 bytes) in: "hdfs://sandbox.hortonworks.com:8020/tmp/temp-1008822037/tmp-363946164" 
+  
+ Counters: 
+ Total records written : 115 
+ Total bytes written : 4024 
+ Spillable Memory Manager spill count : 0 
+ Total bags proactively spilled: 0 
+ Total records proactively spilled: 0 
+  
+ Job DAG: 
+ job_1528831579547_0072 
